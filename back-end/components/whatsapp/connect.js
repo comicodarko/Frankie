@@ -14,8 +14,10 @@ async function connect() {
     if(fs.existsSync(SESSION_FILE_PATH)) {
         wpp.loadAuthInfo(SESSION_FILE_PATH);
         await wpp.connect().then(infos => {
-            console.log(chalk.bgHex(colors.blue).hex(colors.black)(' Sessão Iniciada! '));
-            console.log(`Bem vindo ${chalk.hex(colors.pink)(infos.user.name)}`);
+            setTimeout(() => {
+                console.log(chalk.bgHex(colors.blue).hex(colors.black)(' Sessão Iniciada! '));
+                console.log(`Bem vindo ${chalk.hex(colors.pink)(infos.user.name)}`);
+            }, 1000);
         });
     } else {
         wpp.on('open', () => {

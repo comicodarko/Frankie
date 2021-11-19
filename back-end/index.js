@@ -10,6 +10,8 @@ const colors = require('./assets/colors');
 const routes = require('./routes');
 
 const notion = new NotionClient({ auth: process.env.NOTION_TOKEN });
+global.notion = notion;
+
 const app = express();
 app.use(express.json());
 app.use(cors());

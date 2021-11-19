@@ -56,9 +56,27 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   @keyframes animationShow {
-  to {
-    opacity: 1;
-    transform: initial;
+    to {
+      opacity: 1;
+      transform: initial;
+    }
   }
-}
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #0005;
+    border-radius: 100px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--purple);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--pink);
+  }
 `

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 
 import { Chat, Container, Input, Message } from './styles';
@@ -17,9 +17,11 @@ export default function Main() {
         setFrankieMessages([{ message: 'Tudo limpo 🤫' }]);
       }, 200);
     } else {
-      setFrankieMessages([...frankieMessages, messageObj]);
+      let msgArray = [...frankieMessages];
+      msgArray.push(messageObj);
+      setFrankieMessages(msgArray);
       const response = await axios.post('http://127.0.0.1:4000/sendMessage', messageObj);
-      console.log(response.data);
+      response.data && setFrankieMessages([...msgArray, response.data]);
     }
   }
 

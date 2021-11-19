@@ -7,7 +7,7 @@ module.exports = async (notion, content) => {
     
     if(!content.endsWith(']')) {
         switch(database) {
-            case 'tintoria': case 'tint': case 't':
+            case 'work': case 'w': case 'todo': case 't':
                 return newTodo(notion, content).then(res => res);
     
             case 'movie': case 'movies': case 'filme': case 'filmes': case 'm': case 'f': 

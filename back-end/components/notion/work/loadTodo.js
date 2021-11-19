@@ -5,7 +5,7 @@ module.exports = async (notion, id, content) => {
         const lower = content.toLowerCase();
         const first = lower.charAt(0).toUpperCase();
         const project = first + lower.slice(1);
-        // message = `*🎬 Filmes de ${gender}🎬*\n\n`
+        message = `*💻 A Ser Feito de ${project} 💻*\n\n`
     
         database = await notion.databases.query({
             database_id: id,
@@ -17,6 +17,7 @@ module.exports = async (notion, id, content) => {
             }
         })
     } else {
+		message = '*💻 A Ser Feito 💻*\n\n';
         database = await notion.databases.query({
             database_id: id,
             filter: {
@@ -28,13 +29,9 @@ module.exports = async (notion, id, content) => {
         })
     }
 
-
-    message = '*ToDo Tintoria*\n\n';
-    console.log(`${chalk.bgHex(colors.pink).bold(' ToDo - Tintoria resgatado ')}`);
     
     database.results.forEach(todo => {
-        console.log(`${chalk.hex(colors.pink).bold(`- ${todo.properties.Label.title[0].text.content}`)}`);
-        message = message + `*- ${todo.properties.Label.title[0].text.content}*\n`;
+        message = message + `*- ${todo.properties.Tarefa.title[0].text.content}*\n`;
     })
     return message;
 };

@@ -9,7 +9,7 @@ module.exports = async (notion, message) => {
 
     switch(content[0]) {
         case 'work': case 'w': case 'todo': case 't':
-            return loadTodo(notion, process.env.NOTION_TINTORIA, content[1]).then(res => res);
+            return loadTodo(notion, process.env.NOTION_TODO, content[1]).then(res => res);
     
         case 'movie': case 'movies': case 'filme': case 'filmes': case 'm':  
             return loadMovies(notion, process.env.NOTION_MOVIES, content[1]).then(res => res);

@@ -1,3 +1,4 @@
+const newTodo = require("./work/newTodo");
 const newMovie = require("./movies/newMovie");
 
 module.exports = async (notion, content) => {
@@ -6,8 +7,8 @@ module.exports = async (notion, content) => {
     
     if(!content.endsWith(']')) {
         switch(database) {
-            // case 'tintoria': case 'tint': case 't':
-            //     return newTintoria(notion, content).then(res => res);
+            case 'tintoria': case 'tint': case 't':
+                return newTodo(notion, content).then(res => res);
     
             case 'movie': case 'movies': case 'filme': case 'filmes': case 'm': case 'f': 
                 return newMovie(notion, content).then(res => res);
@@ -33,6 +34,4 @@ module.exports = async (notion, content) => {
             //     return `${database} Não foi encontrado, as opções são: **Tintoria**, **Filmes**, **Links**`;
         }
     }
-    console.log(content);
-    return 'hello'
 }

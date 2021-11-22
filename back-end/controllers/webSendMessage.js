@@ -6,9 +6,10 @@ module.exports = (req, res) => {
 
 	if(message.startsWith('[') && message.includes(']')) {
 		newContent(global.notion, message).then(result => {
+			console.log(result);
 			res.send({ message: result });
 		});
-	} else if(message.toLocaleLowerCase().startsWith('!list')) {
+	} else if(message.toLocaleLowerCase().startsWith('!list') || message.toLocaleLowerCase().startsWith('!l ')) {
 		loadContent(global.notion, message).then(result => {
 			res.send({ message: result });
 		})	

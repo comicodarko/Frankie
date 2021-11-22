@@ -9,19 +9,25 @@ export default function Main() {
   const messagesEndRef = useRef(null);
 
   async function handleSendMessage() {
-    const messageObj = {message: newMessage, me: true};
     setNewMessage('');
-    if(messageObj.message === '!clean') {
-      setFrankieMessages([]);
-      setTimeout(() => {
-        setFrankieMessages([{ message: 'Tudo limpo 🤫' }]);
-      }, 200);
-    } else {
-      let msgArray = [...frankieMessages];
-      msgArray.push(messageObj);
-      setFrankieMessages(msgArray);
-      const response = await axios.post('http://127.0.0.1:4000/sendMessage', messageObj);
-      response.data && setFrankieMessages([...msgArray, response.data]);
+    if(newMessage.trim()) {
+      const messageObj = {message: newMessage, me: true};
+      if(messageObj.message === '!clean') {
+        setFrankieMessages([]);
+        setTimeout(() => {
+          setFrankieMessages([{ message: 'Tudo limpo 🤫' }]);
+        }, 200);
+      } else {
+        let msgArray = [...frankieMessages];
+        msgArray.push(messageObj);
+        setFrankieMessages(msgArray);
+        try {
+          const response = await axios.post('http://127.0.0.1:4000/sendMessage', messageObj);
+          response.data && setFrankieMessages([...msgArray, response.data]);
+        } catch(e) {
+          setFrankieMessages([...msgArray, { message: 'Não consigo ver o que tem a dizer. 😖' }]);
+        }
+      }
     }
   }
 

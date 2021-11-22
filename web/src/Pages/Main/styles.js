@@ -24,7 +24,7 @@ export const Chat = styled.div`
 
 export const Message = styled.div`
   display: flex;
-  word-break: break-all;
+  word-break: break-word;
   padding: 10px;
   max-width: 70%;
   line-height: 1.25rem;

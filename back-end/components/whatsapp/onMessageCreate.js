@@ -12,12 +12,12 @@ module.exports = (notion) => {
             if(newMessage.status >= 2) {
                 if(newMessage.key.fromMe && newMessage.message.conversation.startsWith('[') && newMessage.message.conversation.includes(']')) {
                     newContent(notion, newMessage.message.conversation).then(res => {
-                        wpp.sendMessage(newMessage.key.remoteJid, res, MessageType.text, { quoted: newMessage });
+                        wpp.sendMessage(newMessage.key.remoteJid, res.message, MessageType.text, { quoted: newMessage });
                         wpp.clearMessage(newMessage.key);
                     });
                 } else if(newMessage.message.conversation.toLocaleLowerCase().startsWith('!list')) {
                     loadContent(notion, newMessage.message.conversation).then(res => {
-                        wpp.sendMessage(newMessage.key.remoteJid, res, MessageType.text, { quoted: newMessage });
+                        wpp.sendMessage(newMessage.key.remoteJid, res.message, MessageType.text, { quoted: newMessage });
                         wpp.clearMessage(newMessage.key);
                     })	
                 } else if(newMessage.message.imageMessage && 

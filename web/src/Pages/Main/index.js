@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 
-import { Chat, Container, Input, Message } from './styles';
+import { Chat, Container, Input } from './styles';
+import ContentMessage from './components/ContentMessage';
+import TextMessage from './components/TextMessage';
 
 export default function Main() {
   const [frankieMessages, setFrankieMessages] = useState([{ message: 'Olá amigo.' }]);
@@ -12,7 +14,7 @@ export default function Main() {
     setNewMessage('');
     if(newMessage.trim()) {
       const messageObj = {message: newMessage, me: true};
-      if(messageObj.message === '!clean') {
+      if(messageObj.message === '!clean' || messageObj.message === 'limpar' || messageObj.message === 'apagar') {
         setFrankieMessages([]);
         setTimeout(() => {
           setFrankieMessages([{ message: 'Tudo limpo 🤫' }]);
@@ -39,17 +41,9 @@ export default function Main() {
     <Container className="animationLeft">
       <Chat>
         {frankieMessages.map((messageObj, index) => {
-          const array = messageObj.message.replace(/\*/g, '').split('\n');
-          return (
-            <Message me={messageObj.me} length= {messageObj.message.length} key={index} className="animationLeft">
-              {array.map((element, index) => (
-                <React.Fragment key={index}>
-                  {element}
-                  <br />
-                </React.Fragment>
-              ))}
-            </Message>
-          )
+          return messageObj.content
+            ? <ContentMessage key={index} index={index} messageObj={messageObj} />
+            : <TextMessage key={index} index={index} messageObj={messageObj} />
         } 
         )}
         <div ref={messagesEndRef} />

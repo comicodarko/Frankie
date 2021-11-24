@@ -1,6 +1,7 @@
 module.exports = async (notion, id, content) => {
     let database;
     let message;
+	let movies = [];
     if(isNaN(Number(content))) {
         if(content) {
             const lower = content.toLowerCase();
@@ -45,8 +46,12 @@ module.exports = async (notion, id, content) => {
     
     if(database.results.length > 0) {
         database.results.forEach(movie => {
-            message = message + `*- ${movie.properties.Nome.title[0].text.content}*\n`;
-        })
+			message = message + `*- ${movie.properties.Nome.title[0].text.content}*\n`;
+			movies.push({
+				id: movie.id,
+				label: movie.properties.Nome.title[0].text.content
+			}) 	
+		})
     } else {
         if(content) {
             message = `
@@ -61,5 +66,8 @@ module.exports = async (notion, id, content) => {
             `
         }
     }
-    return message;
+    return {
+		content: movies,
+		message
+	};
 };

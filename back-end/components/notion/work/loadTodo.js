@@ -1,6 +1,7 @@
 module.exports = async (notion, id, content) => {
     let database;
     let message;
+	let todos = [];
     if(content) {
         const lower = content.toLowerCase();
         const first = lower.charAt(0).toUpperCase();
@@ -32,6 +33,13 @@ module.exports = async (notion, id, content) => {
     
     database.results.forEach(todo => {
         message = message + `*- ${todo.properties.Tarefa.title[0].text.content}*\n`;
-    })
-    return message;
+		todos.push({
+			id: todo.id,
+			label: todo.properties.Tarefa.title[0].text.content
+		}) 
+	})
+    return {
+		content: todos,
+		message
+	};
 };

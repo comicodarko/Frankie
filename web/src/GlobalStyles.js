@@ -45,14 +45,12 @@ export const GlobalStyle = createGlobalStyle`
     opacity: 0;
     transform: translateX(-20px);
     animation: animationShow 1.3s forwards; 
-    border-radius: 5px;
   }
 
   .animationRight {
     opacity: 0;
     transform: translateX(20px);
     animation: animationShow 1.3s forwards; 
-    border-radius: 5px;
   }
 
   @keyframes animationShow {

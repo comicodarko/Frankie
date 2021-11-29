@@ -10,10 +10,10 @@ export default function Main() {
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef(null);
 
-  async function handleSendMessage() {
+  async function handleSendMessage(hiddenMessage) {
     setNewMessage('');
-    if(newMessage.trim()) {
-      const messageObj = {message: newMessage, me: true};
+    if(hiddenMessage || newMessage.trim()) {
+      const messageObj = {message: hiddenMessage ? hiddenMessage : newMessage, me: true};
       if(messageObj.message === '!clean' || messageObj.message === 'limpar' || messageObj.message === 'apagar') {
         setFrankieMessages([]);
         setTimeout(() => {
@@ -21,13 +21,14 @@ export default function Main() {
         }, 200);
       } else {
         let msgArray = [...frankieMessages];
-        msgArray.push(messageObj);
+        !hiddenMessage && msgArray.push(messageObj);
         setFrankieMessages(msgArray);
         try {
           const response = await axios.post('http://127.0.0.1:4000/sendMessage', messageObj);
-          response.data && setFrankieMessages([...msgArray, response.data]);
+          response.data && !hiddenMessage && setFrankieMessages([...msgArray, response.data]);
         } catch(e) {
           setFrankieMessages([...msgArray, { message: 'Não consigo ver o que tem a dizer. 😖' }]);
+          console.log(e);
         }
       }
     }
@@ -41,11 +42,10 @@ export default function Main() {
     <Container className="animationLeft">
       <Chat>
         {frankieMessages.map((messageObj, index) => {
-          return messageObj.content
-            ? <ContentMessage key={index} index={index} messageObj={messageObj} />
+          return messageObj.content && messageObj.content.length > 0
+            ? <ContentMessage key={index} index={index} messageObj={messageObj} handleSendMessage={handleSendMessage} />
             : <TextMessage key={index} index={index} messageObj={messageObj} />
-        } 
-        )}
+        })}
         <div ref={messagesEndRef} />
     </Chat>
 

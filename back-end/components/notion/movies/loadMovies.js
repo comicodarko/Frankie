@@ -2,12 +2,14 @@ module.exports = async (notion, id, content) => {
     let database;
     let message;
 	let movies = [];
+	let contentLabel;
     if(isNaN(Number(content))) {
         if(content) {
             const lower = content.toLowerCase();
             const first = lower.charAt(0).toUpperCase();
             const gender = first + lower.slice(1);
-            message = `*🎬 Filmes de ${gender}🎬*\n\n`
+            message = `*🎬 Filmes de ${gender} 🎬*\n\n`;
+			contentLabel = `🎬 Filmes de ${gender} 🎬`;
     
             database = await notion.databases.query({
                 database_id: id,
@@ -20,18 +22,20 @@ module.exports = async (notion, id, content) => {
             })
         } else {
             message = `*🎬 Todos os Filmes 🎬*\n\n`
+			contentLabel = '🎬 Todos os Filmes 🎬';
             database = await notion.databases.query({
                 database_id: id,
-                filter: {
-                    property: 'Assistido',
-                    checkbox: {
-                        equals: false
-                    }
-                }
+                // filter: {
+                //     property: 'Assistido',
+                //     checkbox: {
+                //         equals: false
+                //     }
+                // }
             })
         }
     } else {
-        message = `*🎬 Filmes do ano ${content}🎬*\n\n`
+        message = `*🎬 Filmes do ano ${content} 🎬*\n\n`
+		contentLabel = `🎬 Filmes do ano ${content} 🎬`;
         database = await notion.databases.query({
             database_id: id,
             filter: {
@@ -39,7 +43,6 @@ module.exports = async (notion, id, content) => {
                 number: {
                     equals: Number(content) 
                 }
-                
             }
         })
     }
@@ -49,7 +52,8 @@ module.exports = async (notion, id, content) => {
 			message = message + `*- ${movie.properties.Nome.title[0].text.content}*\n`;
 			movies.push({
 				id: movie.id,
-				label: movie.properties.Nome.title[0].text.content
+				label: movie.properties.Nome.title[0].text.content,
+				watched: movie.properties.Assistido.checkbox
 			}) 	
 		})
     } else {
@@ -68,6 +72,11 @@ module.exports = async (notion, id, content) => {
     }
     return {
 		content: movies,
+		contentLabel,
+		database: 'movies',
+		actions: [
+			// 'delete',
+			'check'],
 		message
 	};
 };

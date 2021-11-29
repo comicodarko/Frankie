@@ -53,6 +53,11 @@ export const GlobalStyle = createGlobalStyle`
     animation: animationShow 1.3s forwards; 
   }
 
+  .animationShow {
+    opacity: 0;
+    animation: animationShow 1.3s forwards; 
+  }
+
   @keyframes animationShow {
     to {
       opacity: 1;

@@ -38,12 +38,21 @@ export const Message = styled.div`
   background-color: ${props => props.me ? 'var(--pink)' : 'var(--blue)'};
 `
 
+export const MessageTitle = styled.h1`
+  font-size: 1.1em;
+  color: var(--pink);
+  text-align: center;
+  margin-bottom: 10px;
+`
+
 export const MessageRow = styled.div`
   display: flex;
   align-items: center;
   margin-top: 2px;
   border-radius: 2px;
   transition: ease-in-out, 0.15s;
+  text-decoration: ${props => props.watched ? 'line-through' : 'none'};
+  color: ${props=> props.watched ? 'var(--gray)' : '#fff'};
   
   &:hover {
     transition: ease-in, 0.15s;
@@ -67,16 +76,19 @@ export const MessageButton = styled.button`
   width: 2rem;
   height: 2rem;
   margin: 0 5px;
-  transition: ease-in-out, 0.15s;
+
+  .btnDelete, .btnCheck {
+    transition: ease-in-out, 0.5s;
+  }
   
   .btnDelete:hover {
     stroke: var(--red);
-    transition: ease-in-out, 0.15s;
+    transition: ease-in-out, 0.5s;
   }
 
   .btnCheck:hover {
     stroke: var(--green);  
-    transition: ease-in-out, 0.15s;
+    transition: ease-in-out, 0.5s;
   }
 `
 

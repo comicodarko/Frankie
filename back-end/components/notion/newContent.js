@@ -11,7 +11,6 @@ module.exports = async (notion, content) => {
 	}
     
     if(!content.endsWith(']')) {
-		console.log(database);
         switch(database) {
             case 'work': case 'w': case 'todo': case 't':
                 return newTodo(notion, content).then(res => res);

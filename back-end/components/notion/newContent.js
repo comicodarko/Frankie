@@ -1,4 +1,4 @@
-const newTodo = require("./work/newTodo");
+const newTodo = require("./todo/newTodo");
 const newMovie = require("./movies/newMovie");
 
 module.exports = async (notion, content) => {
@@ -12,24 +12,24 @@ module.exports = async (notion, content) => {
     
     if(!content.endsWith(']')) {
         switch(database) {
-            case 'work': case 'w': case 'todo': case 't':
+            case 'to-do': case 'todo': case 't':
                 return newTodo(notion, content).then(res => res);
     
             case 'movie': case 'movies': case 'filme': case 'filmes': case 'm': case 'f': 
                 return newMovie(notion, content).then(res => res);
     
 			case '': 
-				return 'As opções são **Tintoria**, **Filmes**, **Links** 🔖'
+				return 'As opções são **To-do**, **Filmes**, **Links** 🔖'
             // case 'link': case 'l':
             //     return newLink(notion, content).then(res => res);
     
             default: 
-                return `${database} não foi encontrado, as opções são: **Tintoria**, **Filmes**, **Links** 🔖`;
+                return `${database} não foi encontrado, as opções são: **To-do**, **Filmes**, **Links** 🔖`;
         }
     } else {
         switch(database) {
-            case 'tintoria': case 'tint': case 't':
-                return 'Preciso que me diga a tarefa que deseja adicionar em Tintoria 😁';
+            case 'todo': case 'to-do': case 't':
+                return 'Preciso que me diga a tarefa que deseja adicionar em To-do 😁';
     
             case 'movie': case 'movies': case 'filme': case 'filmes': case 'm': case 'f': 
                 return 'Esqueceu de me dizer o filme que deseja adicionar em sua lista 😁';
@@ -41,7 +41,7 @@ module.exports = async (notion, content) => {
 				return 'Não consegui entender 😕'
             
 				default: 
-                return `${database} não foi encontrado, as opções são: **Tintoria**, **Filmes**, **Links** 🔖`;
+                return `${database} não foi encontrado, as opções são: **To-do**, **Filmes**, **Links** 🔖`;
         }
     }
 }

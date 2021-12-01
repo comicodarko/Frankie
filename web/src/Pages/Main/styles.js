@@ -5,8 +5,12 @@ export const Container = styled.div`
   width: 100%;
   flex-direction: column;
   align-items: center;
-  padding: 10vh 20vw;
+  padding: 0 20vw;
   max-height: 90vh;
+
+  @media(max-width: 800px) {
+    padding: 0;
+  }
 `
 
 export const Chat = styled.div`

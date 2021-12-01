@@ -4,14 +4,16 @@ import axios from 'axios';
 import { Chat, Container, Input } from './styles';
 import ContentMessage from './components/ContentMessage';
 import TextMessage from './components/TextMessage';
+import Menu from './components/Menu';
 
 export default function Main() {
   const [frankieMessages, setFrankieMessages] = useState([{ message: 'Olá amigo.' }]);
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef(null);
 
-  async function handleSendMessage(hiddenMessage) {
+  async function handleSendMessage(hiddenMessage, forceShowMessage) {
     setNewMessage('');
+    console.log(hiddenMessage);
     if(hiddenMessage || newMessage.trim()) {
       const messageObj = {message: hiddenMessage ? hiddenMessage : newMessage, me: true};
       if(messageObj.message === '!clean' || messageObj.message === 'limpar' || messageObj.message === 'apagar') {
@@ -25,7 +27,9 @@ export default function Main() {
         setFrankieMessages(msgArray);
         try {
           const response = await axios.post('http://127.0.0.1:4000/sendMessage', messageObj);
-          response.data && !hiddenMessage && setFrankieMessages([...msgArray, response.data]);
+          if((response.data && !hiddenMessage) || (response.data && forceShowMessage)) {
+            setFrankieMessages([...msgArray, response.data]);
+          }
         } catch(e) {
           setFrankieMessages([...msgArray, { message: 'Não consigo ver o que tem a dizer. 😖' }]);
           console.log(e);
@@ -39,7 +43,8 @@ export default function Main() {
   }, [frankieMessages])
 
   return(
-    <Container className="animationLeft">
+    <Container>
+      <Menu handleSendMessage={handleSendMessage} />
       <Chat>
         {frankieMessages.map((messageObj, index) => {
           return messageObj.content && messageObj.content.length > 0
@@ -47,7 +52,7 @@ export default function Main() {
             : <TextMessage key={index} index={index} messageObj={messageObj} />
         })}
         <div ref={messagesEndRef} />
-    </Chat>
+      </Chat>
 
     <Input value={newMessage} onChange={e => {setNewMessage(e.target.value)}} 
     onKeyDown={(e => { e.key === 'Enter' && newMessage && handleSendMessage()})} />

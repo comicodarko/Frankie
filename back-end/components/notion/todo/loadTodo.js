@@ -32,10 +32,10 @@ module.exports = async (notion, id, content) => {
 
     
     database.results.forEach(todo => {
-        message = message + `*- ${todo.properties.Tarefa.title[0].text.content}*\n`;
+        message = message + `*- ${todo.properties.Todo.title[0].text.content}*\n`;
 		todos.push({
 			id: todo.id,
-			label: todo.properties.Tarefa.title[0].text.content
+			label: todo.properties.Todo.title[0].text.content
 		}) 
 	})
     return {

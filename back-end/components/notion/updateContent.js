@@ -2,13 +2,13 @@ require('dotenv').config();
 
 const loadMovies = require('./movies/loadMovies');
 const updateMovie = require('./movies/updateMovie');
-const loadTodo = require('./work/loadTodo');
+const loadTodo = require('./todo/loadTodo');
 
 module.exports = async (notion, message) => {
     const content = message.toLocaleLowerCase().split(' ');
 
     switch(content[1]) {
-        // case 'work': case 'w': case 'todo': case 't':
+        // case 'to-do': case 'todo': case 't':
         //     return loadTodo(notion, process.env.NOTION_TODO, content[1]).then(res => res);
     
         case 'movie': case 'movies': case 'filme': case 'filmes': case 'm':  

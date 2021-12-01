@@ -6,7 +6,7 @@ module.exports = async (notion, todo) => {
             database_id: process.env.NOTION_TODO
         },
         properties: {
-            Tarefa: { title: [{text: {content: todo}}] },
+            Todo: { title: [{text: {content: todo}}] },
             Done: {checkbox: false}
         }
     })

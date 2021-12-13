@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
 
-import { Chat, Container, Input } from './styles';
+import { Chat, Container } from './styles';
 import ContentMessage from './components/ContentMessage';
 import TextMessage from './components/TextMessage';
 import Menu from './components/Menu';
+import api from '../../services/api';
 
 export default function Main() {
   const [frankieMessages, setFrankieMessages] = useState([{ message: 'Olá amigo.' }]);
@@ -26,7 +26,7 @@ export default function Main() {
         !hiddenMessage && msgArray.push(messageObj);
         setFrankieMessages(msgArray);
         try {
-          const response = await axios.post('http://127.0.0.1:4000/sendMessage', messageObj);
+          const response = await api.post('/sendMessage', messageObj);
           if((response.data && !hiddenMessage) || (response.data && forceShowMessage)) {
             setFrankieMessages([...msgArray, response.data]);
           }
@@ -54,8 +54,8 @@ export default function Main() {
         <div ref={messagesEndRef} />
       </Chat>
 
-    <Input value={newMessage} onChange={e => {setNewMessage(e.target.value)}} 
-    onKeyDown={(e => { e.key === 'Enter' && newMessage && handleSendMessage()})} />
-  </Container>
+      <input value={newMessage} onChange={e => {setNewMessage(e.target.value)}} 
+      onKeyDown={(e => { e.key === 'Enter' && newMessage && handleSendMessage()})} />
+    </Container>
   )
 }

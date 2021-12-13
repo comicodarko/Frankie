@@ -55,8 +55,8 @@ export const MessageRow = styled.div`
   margin-top: 2px;
   border-radius: 2px;
   transition: ease-in-out, 0.15s;
-  text-decoration: ${props => props.watched ? 'line-through' : 'none'};
-  color: ${props=> props.watched ? 'var(--gray)' : '#fff'};
+  text-decoration: ${props => props.checked ? 'line-through' : 'none'};
+  color: ${props=> props.checked ? 'var(--gray)' : '#fff'};
   
   &:hover {
     transition: ease-in, 0.15s;
@@ -93,24 +93,5 @@ export const MessageButton = styled.button`
   .btnCheck:hover {
     stroke: var(--green);  
     transition: ease-in-out, 0.5s;
-  }
-`
-
-export const Input = styled.input`
-  padding: 10px;
-  display: flex;
-  min-width: 20%;
-  max-width: 80%;
-  margin: 20px auto;
-  border: 3px solid var(--purple);
-  border-radius: 5px;
-  outline: none;
-  color: var(--black);
-  text-align: center;
-  font-size: 1.1rem;
-
-  &:active, &:hover, &:focus {
-    transition: 1s;
-    border: 3px solid var(--pink);  
   }
 `

@@ -22,6 +22,8 @@ export const GlobalStyle = createGlobalStyle`
   }
   
   html {
+    overflow-x: hidden;
+
     @media (max-width: 1080px){
       font-size: 93.75%;
     }
@@ -40,22 +42,53 @@ export const GlobalStyle = createGlobalStyle`
     align-items: center;
     justify-content: center;
   }
+
+  input {
+    padding: 10px;
+    display: flex;
+    min-width: 20%;
+    max-width: 80%;
+    margin: 20px auto;
+    border: 3px solid var(--purple);
+    border-radius: 5px;
+    outline: none;
+    color: var(--black);
+    text-align: center;
+    font-size: 1.1rem;
+
+    &:active, &:hover, &:focus {
+      transition: 1s;
+      border: 3px solid var(--pink);  
+    }
+  }
   
   .animationLeft {
     opacity: 0;
     transform: translateX(-20px);
-    animation: animationShow 1.3s forwards; 
+    animation: animationShow 0.7s forwards; 
   }
 
   .animationRight {
     opacity: 0;
     transform: translateX(20px);
-    animation: animationShow 1.3s forwards; 
+    animation: animationShow 0.7s forwards; 
+  }
+
+  .animationDown {
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: animationShow 0.5s forwards; 
+  }
+
+  .animationUp {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: animationShow 0.5s forwards; 
   }
 
   .animationShow {
     opacity: 0;
-    animation: animationShow 1.3s forwards; 
+    animation: animationShow 0.5s forwards; 
   }
 
   @keyframes animationShow {

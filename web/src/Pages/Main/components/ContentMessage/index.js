@@ -8,8 +8,8 @@ export default function ContentMessage({index, messageObj, handleSendMessage}) {
     const index = content.findIndex(el => el.id === id);
     let arr = [...content];  
     if(action === 'check'){
-      arr[index].watched = !arr[index].watched;
-      await handleSendMessage(`!edit ${messageObj.database} ${id} ${arr[index].watched ? 'check' : 'unCheck'}`);
+      arr[index].checked = !arr[index].checked;
+      await handleSendMessage(`!edit ${messageObj.database} ${id} ${arr[index].checked ? 'check' : 'unCheck'}`);
     }
     setContent([...arr]);
   }
@@ -18,15 +18,16 @@ export default function ContentMessage({index, messageObj, handleSendMessage}) {
     <Message key={index} className={`${messageObj.me ? 'animationRight' : 'animationLeft'}`}>
       <MessageTitle>{messageObj.contentLabel}</MessageTitle>
       {content.map(content => (
-        <MessageRow key={content.id} watched={content.watched}>
+        <MessageRow key={content.id} checked={content.checked}>
           <MessageButtonsArea key={content.id}>
             {messageObj.actions && messageObj.actions.map(action => {
+              console.log(content);
               return (
-                <MessageButton key={`${content.id}-${action}`} onClick={() => handle(action, content.id)}>
+                <MessageButton key={`${content.id}-${action}`} checked={content.checked} onClick={() => handle(action, content.id)}>
                   {action === 'delete' && !content.deleted && <FiDelete className="btnDelete animationShow" size={28} />}
                   {action === 'delete' && content.deleted && <FiCheckSquare className="animationShow btnCheck" size={30} />}  
-                  {action === 'check' && !content.watched && <FiSquare className="btnCheck animationShow" size={30} />}
-                  {action === 'check' && content.watched && <FiCheckSquare className="animationShow btnCheck" size={28} />}
+                  {action === 'check' && !content.checked && <FiSquare className="btnCheck animationShow" size={30} />}
+                  {action === 'check' && content.checked && <FiCheckSquare className="animationShow btnCheck" size={28} />}
                 </MessageButton>
               )
             })}

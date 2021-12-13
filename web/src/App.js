@@ -1,10 +1,13 @@
 import React from 'react';
+import GlobalProvider from './contexts/global';
 import Main from './Pages/Main';
 
 export default function App() {
   return (
-    <div className="App">
-      <Main />
-    </div>
+    <GlobalProvider>
+      <div className="App">
+        <Main />
+      </div>
+    </GlobalProvider>
   );
 }

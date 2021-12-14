@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { FcClapperboard, FcTodoList, FcSms } from 'react-icons/fc';
+import { FcClapperboard, FcTodoList, FcSms, FcLink } from 'react-icons/fc';
 import { BsPlusSquare } from 'react-icons/bs';
 import { CgSearchLoading } from 'react-icons/cg';
 
 import api from "../../../../services/api";
-import { MenuButton, MenuContainer, MenuInput } from './styles';
+import { MenuButton, MenuContainer } from './styles';
+import AddInput from "./components/AddInput";
 
 export default function Menu({handleSendMessage}) {
   const [showInput, setShowInput] = useState('');
@@ -23,12 +24,12 @@ export default function Menu({handleSendMessage}) {
   }
 
   useEffect(() => {
-    window.addEventListener('keydown', (e) => {
+    const listener = window.addEventListener('keydown', (e) => {
       e.key === 'Escape' && setShowInput('');
     })
 
     return () => {
-      window.removeEventListener('keydown');
+      window.removeEventListener('keydown', listener);
     }
   }, []);
   
@@ -37,12 +38,8 @@ export default function Menu({handleSendMessage}) {
       <MenuButton>
         <FcTodoList size={35} />
           {showInput === 'todo'
-            ? <span className="action animationLeft">
-                <MenuInput className="animationShow" autoFocus 
-                  value={input} onChange={e => setInput(e.target.value)}
-                  onKeyDown={(e => handleAction(e.key, 'todo'))} 
-                  onBlur={() => setShowInput('')} />
-              </span>
+            ? <AddInput label="Nova Tarefa" value={input} handleAction={handleAction} 
+              setValue={setInput} setShowInput={setShowInput} action='todo' />
             : <>
               <span className="action animationLeft" onClick={() => setShowInput('todo')} >
                   <BsPlusSquare size={30} />
@@ -51,19 +48,14 @@ export default function Menu({handleSendMessage}) {
                 onClick={() => handleSendMessage('!list todo', true)}>
                 <CgSearchLoading size={30} />
               </span>
-            </> 
-          }
+            </>}
       </MenuButton>
 
       <MenuButton>
         <FcClapperboard size={35} />
         {showInput === 'movies'
-          ? <span className="action animationShow">
-              <MenuInput className="animationShow" autoFocus 
-                value={input} onChange={e => setInput(e.target.value)}
-                onKeyDown={(e => handleAction(e.key, 'movies'))} 
-                onBlur={() => setShowInput('')} />
-            </span>
+          ? <AddInput label="Novo Filme" value={input} handleAction={handleAction} 
+            setValue={setInput} setShowInput={setShowInput} action="movies" />
           : <>
             <span className="action animationLeft" onClick={() => setShowInput('movies')} >
               <BsPlusSquare size={30} />
@@ -72,8 +64,23 @@ export default function Menu({handleSendMessage}) {
               onClick={() => handleSendMessage('!list movies', true)}>
               <CgSearchLoading size={30} />
             </span>
-          </>
-        }
+          </>}
+      </MenuButton>
+      
+      <MenuButton>
+        <FcLink size={35} />
+        {showInput === 'links'
+          ? <AddInput label="Novo Link" value={input} handleAction={handleAction} 
+            setValue={setInput} setShowInput={setShowInput} action="links" />
+          : <>
+            <span className="action animationLeft" onClick={() => setShowInput('links')} >
+              <BsPlusSquare size={30} />
+            </span>
+            <span className="action animationRight" style={{ top: '170%' }}
+              onClick={() => handleSendMessage('!list links', true)}>
+              <CgSearchLoading size={30} />
+            </span>
+          </>}
       </MenuButton>
 
       {/* <MenuButton onClick={() => {api.get('/getMessages').then(t => console.log(t))}}>

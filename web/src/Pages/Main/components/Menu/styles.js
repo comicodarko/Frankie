@@ -29,7 +29,7 @@ export const MenuButton = styled.div`
     background-color: var(--purple);
     color: #fff;
     top: 90%;
-    left: 50%;
+    /* left: 50%; */
     text-align: center;
     position: absolute;
     padding: 5px 20px;
@@ -48,9 +48,4 @@ export const MenuButton = styled.div`
     transition: ease-in .15s;
     padding-bottom: 10px;
   }
-`
-
-export const MenuInput = styled.input`
-  margin: 0;
-  max-width: 100%;
 `

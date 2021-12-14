@@ -28,7 +28,7 @@ module.exports = async (notion, movie) => {
                         Nome: { title: [{text: {content: title}}] },
                         Ano: { number: Number(release_date.substring(0, 4))},
                         Duração: { number: runtime},
-                        Assistido: {checkbox: false},
+                        Done: {checkbox: false},
                         Gêneros: {multi_select: genres.map(genre => ({name: genre.name}))}
                     }
                 })

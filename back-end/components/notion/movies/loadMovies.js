@@ -53,7 +53,7 @@ module.exports = async (notion, id, content) => {
 			movies.push({
 				id: movie.id,
 				label: movie.properties.Nome.title[0].text.content,
-				watched: movie.properties.Assistido.checkbox
+				checked: movie.properties.Done.checkbox
 			}) 	
 		})
     } else {

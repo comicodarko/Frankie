@@ -28,11 +28,11 @@ async function connect() {
         await wpp.connect();
     }
     
-    wpp.on('initial-data-received', async () => {
+    wpp.on('initial-data-received', async (e) => {
+		console.log(e);
         const chats = Object.values(wpp.chats.dict);
         const frankie = chats.find(chat => chat.name === '🤖 Frankie 🤖');
         await wpp.modifyChat(frankie.jid, ChatModification.clear);
-        return frankie;
     });
 
     // wpp.on('contact-update', (contact) => {
@@ -40,8 +40,8 @@ async function connect() {
     //     console.log(contact);
     // });
 
-    wpp.on('close', (err) => console.log(chalk.bgHex(colors.red)(' Desconectado! '), chalk.hex(colors.red)(err.reason)))  
-    wpp.on('ws-close', (err) => console.log(chalk.bgHex(colors.red)(' WS Encerrado! '), chalk.hex(colors.red)(err.reason)))  
+    wpp.on('close', (err) => console.log(chalk.bgHex(colors.red)(' WPP Desconectado! '), chalk.hex(colors.red)(err.reason)))  
+    wpp.on('ws-close', (err) => console.log(chalk.bgHex(colors.red)(' WPP WS Encerrado! '), chalk.hex(colors.red)(err.reason)))  
 }
 
 module.exports = {

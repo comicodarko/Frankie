@@ -1,25 +1,25 @@
-require('dotenv').config();
-
-const loadMovies = require('./movies/loadMovies');
-const updateMovie = require('./movies/updateMovie');
-const loadTodo = require('./todo/loadTodo');
-
 module.exports = async (notion, message) => {
-    const content = message.toLocaleLowerCase().split(' ');
+    const array = message.toLocaleLowerCase().split(' ');
+	const content = {
+		database: array[1],
+		id: array[2],
+		action: array[3],
+	}
 
-    switch(content[1]) {
-        // case 'to-do': case 'todo': case 't':
-        //     return loadTodo(notion, process.env.NOTION_TODO, content[1]).then(res => res);
-    
-        case 'movie': case 'movies': case 'filme': case 'filmes': case 'm':  
-            return updateMovie(notion, content[2], content[3]).then(res => res);
-       
-		case '': 
-			return 'Preciso que me diga o que listar 😁'
-        // case 'links': case 'link': case 'l':  
-        //     return loadLinks(notion, process.env.NOTION_LINKS).then(res => res);
-    
-        default: 
-            return 'Não entendi, poderia repetir?'
-    } 
+	if(content.action === 'check' || content.action === 'uncheck') {
+		const response = await notion.pages.update({
+			page_id: content.id,
+			properties: {
+				Done: {
+					checkbox: content.action === 'check' ? true : false
+				}
+			}
+		})
+		
+		if(response.url) {
+			return 'feito ✔️';
+		} else {
+			return 'Não consegui enviar sua ação ☹️';
+		}
+	}
 };

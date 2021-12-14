@@ -9,11 +9,12 @@ import api from '../../services/api';
 export default function Main() {
   const [frankieMessages, setFrankieMessages] = useState([{ message: 'Olá amigo.' }]);
   const [newMessage, setNewMessage] = useState('');
+
   const messagesEndRef = useRef(null);
 
   async function handleSendMessage(hiddenMessage, forceShowMessage) {
     setNewMessage('');
-    console.log(hiddenMessage);
+    hiddenMessage && console.log(hiddenMessage);
     if(hiddenMessage || newMessage.trim()) {
       const messageObj = {message: hiddenMessage ? hiddenMessage : newMessage, me: true};
       if(messageObj.message === '!clean' || messageObj.message === 'limpar' || messageObj.message === 'apagar') {
@@ -55,7 +56,7 @@ export default function Main() {
       </Chat>
 
       <input value={newMessage} onChange={e => {setNewMessage(e.target.value)}} 
-      onKeyDown={(e => { e.key === 'Enter' && newMessage && handleSendMessage()})} />
+        onKeyDown={(e => { e.key === 'Enter' && newMessage && handleSendMessage()})} />
     </Container>
   )
 }

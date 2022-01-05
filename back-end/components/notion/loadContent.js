@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const loadMovies = require('./movies/loadMovies');
 const loadTodo = require('./todo/loadTodo');
+const loadLinks = require('./links/loadLinks');
 
 module.exports = async (notion, message) => {
 	let sliced;
@@ -19,12 +20,10 @@ module.exports = async (notion, message) => {
         case 'movie': case 'movies': case 'filme': case 'filmes': case 'm':  
             return loadMovies(notion, process.env.NOTION_MOVIES, content[1]).then(res => res);
        
+		case 'links': case 'link': case 'l':  
+		    return loadLinks(notion, process.env.NOTION_LINKS).then(res => res);
+		
 		case '': 
 			return {message: 'Preciso que me diga o que listar 😁'}
-        // case 'links': case 'link': case 'l':  
-        //     return loadLinks(notion, process.env.NOTION_LINKS).then(res => res);
-    
-        // default: 
-        //     return loadGeneral(notion, process.env.NOTION_GENERAL).then(res => res);
     } 
 };

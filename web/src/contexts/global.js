@@ -5,6 +5,8 @@ export const GlobalContext = createContext({});
 
 export default function GlobalProvider({ children }) {
   const [movieGenres, setMovieGenres] = useState([]);
+  const [linkTypes, setLinkTypes] = useState([]);
+  const [todoTypes, setTodoTypes] = useState([]);
 
   useEffect(() => {
     ws.on('connect', () => {
@@ -13,7 +15,11 @@ export default function GlobalProvider({ children }) {
     
     ws.on('information', info => {
       if(info.type === 'movieGenres') {
-        setMovieGenres(info.content);
+        setMovieGenres([{}, ...info.content]);
+      } else if(info.type === 'linkTypes') {
+        setLinkTypes([{}, ...info.content]);
+      } else if(info.type === 'todoTypes') {
+        setTodoTypes([{}, ...info.content]);
       } else {
         console.log(info);
       }
@@ -26,12 +32,11 @@ export default function GlobalProvider({ children }) {
     return () => {
       ws.removeAllListeners();
     }
-    
   }, []);
 
   return (
     <GlobalContext.Provider value={{
-      movieGenres
+      movieGenres, linkTypes, todoTypes
     }}>
       {children}
     </GlobalContext.Provider>

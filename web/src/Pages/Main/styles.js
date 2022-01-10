@@ -42,8 +42,8 @@ export const Message = styled.div`
   background-color: ${props => props.me ? 'var(--pink)' : 'var(--blue)'};
 `
 
-export const MessageTitle = styled.h1`
-  font-size: 1.1em;
+export const MessageTitle = styled.p`
+  font-size: 1.2em;
   color: var(--pink);
   text-align: center;
   margin-bottom: 10px;

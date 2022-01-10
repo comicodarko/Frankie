@@ -1,5 +1,6 @@
 const newTodo = require("./todo/newTodo");
 const newMovie = require("./movies/newMovie");
+const newGame = require("./games/newGame");
 
 module.exports = async (notion, content) => {
 	let database;
@@ -18,10 +19,11 @@ module.exports = async (notion, content) => {
             case 'movie': case 'movies': case 'filme': case 'filmes': case 'm': case 'f': 
                 return newMovie(notion, content).then(res => res);
     
-			case '': 
+			case 'game': case 'games': case 'jogo': case 'j': case 'jogos': case 'g':
+			    return newGame(notion, content).then(res => res);
+			
+				case '': 
 				return 'As opções são **To-do**, **Filmes**, **Links** 🔖'
-            // case 'link': case 'l':
-            //     return newLink(notion, content).then(res => res);
     
             default: 
                 return `${database} não foi encontrado, as opções são: **To-do**, **Filmes**, **Links** 🔖`;

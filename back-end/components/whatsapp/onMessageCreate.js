@@ -1,4 +1,5 @@
-const { MessageType } = require('@adiwajshing/baileys');
+const { MessageType, decryptMediaMessageBuffer } = require('@adiwajshing/baileys');
+const fs = require('fs');
 
 const { wpp } = require('./connect');
 const loadContent = require('../notion/loadContent');
@@ -29,8 +30,42 @@ module.exports = (notion) => {
 							wpp.sendMessage(newMessage.key.remoteJid, res, MessageType.sticker, { quoted: newMessage })
 						})
 					});
+				} else {
 				}
-            }
-        }
+            } else {
+				if(newMessage.message) {
+					console.log(newMessage);
+					const id = newMessage.message.participant 
+						? newMessage.message.participant 
+						: newMessage.key.remoteJid
+							&& newMessage.key.remoteJid;
+					
+					const text = newMessage.message.extendedTextMessage 
+						? newMessage.message.extendedTextMessage.text
+						: newMessage.message.conversation
+							&& newMessage.message.conversation;   
+					
+					const type = newMessage.message.audioMessage ? 'audio' 
+						: newMessage.message.stickerMessage ? 'sticker'
+						: newMessage.message.imageMessage ? 'image' 
+						: newMessage.message.documentMessage ? 'document'
+						: newMessage.message.videoMessage ? 'video'
+						: newMessage.message.locationMessage ? 'location' 
+						: newMessage.message.groupInviteMessage && 'groupInvite'
+
+					const message = {
+						text, 
+						id,
+						type: type ? type : 'text' 
+					}
+					if(message.type === 'audio' || message.type === 'image' || message.type === 'video' || message.type === 'document') {
+						// decryptMediaMessageBuffer(newMessage.message).then(buffer => {
+						// 	fs.writeFileSync('/tmp', 'new', (err) => alert(err));
+						// 	console.log(teste)
+						// });
+					}
+				}
+			}
+        } 
     })
 }

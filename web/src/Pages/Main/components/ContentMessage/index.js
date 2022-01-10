@@ -33,7 +33,7 @@ export default function ContentMessage({index, messageObj, handleSendMessage}) {
             })}
           </MessageButtonsArea>
           {messageObj.actions.includes('link') 
-            ? <a href={content.link} target="_blank">{content.label}</a>
+            ? <a href={content.link} target="_blank" rel="noopener noreferrer">{content.label}</a>
             : content.label
           }
         </MessageRow>

@@ -10,8 +10,12 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "react": "17.0.2",
-    "react-native": "0.66.4"
+    "react-native": "0.66.4",
+    "react-native-material-menu": "^2.0.0",
+    "react-native-vector-icons": "^9.0.0",
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -25,5 +29,10 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "rnpm": {
+    "assets": [
+      "./src/assets/fonts/"
+    ]
   }
 }

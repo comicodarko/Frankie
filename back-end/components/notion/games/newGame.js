@@ -1,11 +1,9 @@
 require('dotenv').config();
-const getGame = require('../../tgdb/getGame');
+const searchGame = require('../../tgdb/searchGame');
 
 const getMovie = require('../../tmdb/getMovie');
 
 module.exports = async (notion, movie) => {
-	getGame();
-	return
     return getMovie(movie).then(async result => {
         if(result) {
             const { title,  genres, original_title, runtime, release_date, 

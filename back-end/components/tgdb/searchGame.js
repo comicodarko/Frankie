@@ -2,7 +2,7 @@ require('dotenv').config();
 const igdb = require('igdb-api-node').default;
 const axios = require('axios').default;
 
-module.exports = async () => {
+module.exports = async (gameSearch) => {
 	axios({
 		url: `https://id.twitch.tv/oauth2/token?client_id=${process.env.TWITCH_ID}&client_secret=${process.env.TWITCH_SECRET}&grant_type=client_credentials`,
 		method: 'POST',
@@ -11,23 +11,38 @@ module.exports = async () => {
 
 		const search = await igdb(process.env.TWITCH_ID, access_token)
 			.fields([
-				'name', 'artworks', 'alternative_names', 'aggregated_rating', 'aggregated_rating_count', 'bundles', 
+				'name', 'artworks', 'alternative_names', 'aggregated_rating', 'involved_companies', 'aggregated_rating_count', 'bundles', 
 				'collection', 'cover', 'dlcs', 'expanded_games', 'expansions', 'first_release_date', 
 				'franchise', 'genres', 'keywords', 'parent_game', 'platforms', 'total_rating', 'total_rating_count',
-				'storyline', 'url', 'summary',
+				'storyline', 'url', 'summary', 'videos'
 			])
-			.search('Skyrim Special')
+			.search(gameSearch)
 			// .where('category = 0 | category = 10')
 			.request('/games');
 
-		const { id, name, cover } = search.data[0];
+		const formattedResult = []; 
+		search.data.forEach(async result => {
+			const { id, name, cover } = result;
 
-		const coverResult = await igdb(process.env.TWITCH_ID, access_token)
-			.fields(['url', 'width', 'height'])
-			.where(`id = ${cover}`)
-			.request('/covers')
+			if(cover) {
+				const covers = await igdb(process.env.TWITCH_ID, access_token)
+					.fields(['url', 'width', 'animated', 'height', 'game'])
+					.where(`id = ${cover}`)
+					.request('/covers')
 
-		console.log(coverResult);
+				covers.data.forEach(cover => {
+					const coverObj = {
+						...cover,
+						url: cover.url.replace('t_thumb', 't_cover_big')
+					} 
+					formattedResult.push(coverObj);
+					console.log(coverObj);
+				});
+			}
+		})
+
+
+
 		// const gameDetail = await igdb(process.env.TWITCH_ID, access_token)
 		// .fields(['name'])
 		// .search(name)

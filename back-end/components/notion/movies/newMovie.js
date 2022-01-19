@@ -2,13 +2,13 @@ require('dotenv').config();
 
 const getMovie = require('../../tmdb/getMovie');
 
-module.exports = async (notion, movie) => {
+module.exports = async (movie) => {
     return getMovie(movie).then(async result => {
         if(result) {
             const { title,  genres, original_title, runtime, release_date, 
                 imdb_id, budget, poster_path, backdrop_path, status, tagline, overview} = result;
             
-            const movies = await notion.databases.query({
+            const movies = await global.notion.databases.query({
                 database_id: process.env.NOTION_MOVIES,
             })
     
@@ -20,7 +20,7 @@ module.exports = async (notion, movie) => {
             if(found) {
                 return `${title} já se encontra na sua lista de filmes 🙃`;
             } else {
-                const response = await notion.pages.create({
+                const response = await global.notion.pages.create({
                     parent: {
                         database_id: process.env.NOTION_MOVIES
                     },

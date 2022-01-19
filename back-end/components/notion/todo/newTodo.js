@@ -1,7 +1,7 @@
 require('dotenv').config();
 
-module.exports = async (notion, todo) => {
-    const response = await notion.pages.create({
+module.exports = async (todo) => {
+    const response = await global.notion.pages.create({
         parent: {
             database_id: process.env.NOTION_TODO
         },

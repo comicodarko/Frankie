@@ -1,6 +1,6 @@
 const newTodo = require("./todo/newTodo");
 const newMovie = require("./movies/newMovie");
-const newGame = require("./games/newGame");
+const searchGame = require("./games/newGame");
 
 module.exports = async (notion, content) => {
 	let database;

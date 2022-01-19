@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
 
 import colors from '../../../../assets/colors';
-import { MenuButtonWrapper, Touchable } from './styles';
+import { MenuButtonWrapper, Touchable, SubMenuItem, SubMenuItemText} from './styles';
 
 export default function MenuButton({ icon, items }) {
     const [visible, setVisible] = useState(false);
@@ -21,11 +21,17 @@ export default function MenuButton({ icon, items }) {
                 anchor={<Touchable onPress={open}>{icon}</Touchable>}
                 onRequestClose={close}
             >
-                {items.map(item => 
-                    <MenuItem key={item.id} onPress={() => {handle(item.action)} }>
-                        {item.component}
+                {items.map(item => (<React.Fragment  key={item.id}>
+                    <MenuItem onPress={() => {handle(item.action)} }>
+                        <SubMenuItem>
+                            {item.icon}
+                            <SubMenuItemText>
+                                {item.label}
+                            </SubMenuItemText>
+                        </SubMenuItem>
                     </MenuItem>    
-                )}
+                    <MenuDivider />
+                </React.Fragment>))}
             </Menu>
         </MenuButtonWrapper>
     );

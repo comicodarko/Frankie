@@ -1,6 +1,7 @@
 const searchGame = require('../components/tgdb/searchGame');
 
 module.exports = (req, res) => {
-	const { type, search } = req.body; 
-	type === 'games' && searchGame(search);
+	const { contentType, content } = req.body; 
+	
+	contentType === 'games' && searchGame(content).then(result => res.send(result));
 }

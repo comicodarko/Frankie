@@ -3,7 +3,7 @@ const igdb = require('igdb-api-node').default;
 const axios = require('axios').default;
 
 module.exports = async (gameSearch) => {
-	axios({
+	return axios({
 		url: `https://id.twitch.tv/oauth2/token?client_id=${process.env.TWITCH_ID}&client_secret=${process.env.TWITCH_SECRET}&grant_type=client_credentials`,
 		method: 'POST',
 	}).then(async res => {
@@ -20,36 +20,35 @@ module.exports = async (gameSearch) => {
 			// .where('category = 0 | category = 10')
 			.request('/games');
 
-		const formattedResult = []; 
-		search.data.forEach(async result => {
-			const { id, name, cover } = result;
+		const promises = search.data.map(async result => {
+			const { cover } = result;
 
-			if(cover) {
-				const covers = await igdb(process.env.TWITCH_ID, access_token)
-					.fields(['url', 'width', 'animated', 'height', 'game'])
-					.where(`id = ${cover}`)
-					.request('/covers')
+			return new Promise(async (resolve) => {
+				if(cover) {
+					const covers = await igdb(process.env.TWITCH_ID, access_token)
+						.fields(['url', 'width', 'animated', 'height', 'game'])
+						.where(`id = ${cover}`)
+						.request('/covers')
+	 
+					resolve({
+						...result,	
+						cover: covers.data[0].url.replace('t_thumb', 't_cover_big')
+					}); 
+				} else {
+					resolve(result);
+				}
+			})
+		});
 
-				covers.data.forEach(cover => {
-					const coverObj = {
-						...cover,
-						url: cover.url.replace('t_thumb', 't_cover_big')
-					} 
-					formattedResult.push(coverObj);
-					console.log(coverObj);
-				});
-			}
+		const games = [];
+		return Promise.all(promises).then((result) => {
+			games.push(result);
+		}).then(() => {
+			return {
+				message: 'Encontrei alguns jogos',
+				games
+			};
 		})
-
-
-
-		// const gameDetail = await igdb(process.env.TWITCH_ID, access_token)
-		// .fields(['name'])
-		// .search(name)
-		// .request('/games');
-
-		// console.log(search.data);
-		// console.log(search.data.length);
 	});
 	
 }

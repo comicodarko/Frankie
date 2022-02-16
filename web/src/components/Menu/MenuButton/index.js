@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BsPlusSquare } from "react-icons/bs";
 import { CgSearchLoading } from "react-icons/cg";
-import { FcClapperboard, FcLink, FcTodoList } from "react-icons/fc";
+import { FcClapperboard, FcLink, FcTodoList, FcSteam } from "react-icons/fc";
 import Filters from '../Filters';
 
 import AddInput from "../AddInput";
@@ -31,13 +31,15 @@ export default function MenuButton({ type, handleSendMessage }) {
   const label = 
       type === 'todo' ? 'Nova Tarefa' 
     : type === 'movies' ? 'Novo Filme'
-    : type === 'links' && 'Novo Link';
+    : type === 'links' ? 'Novo Link'
+    : type === 'games' && 'Novo Jogo'
 
   return (
     <Button>
       {type === 'todo' && <FcTodoList size={35} />}
       {type === 'movies' && <FcClapperboard size={35} />}
       {type === 'links' && <FcLink size={35} />}
+      {type === 'games' && <FcSteam size={35} />}
         {showInput &&
           <AddInput label={label} value={input} handleActionAdd={handleActionAdd} 
             setValue={setInput} setShowInput={setShowInput} action={type} />

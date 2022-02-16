@@ -1,5 +1,5 @@
 import React from "react";
-import { Message } from "../../styles";
+import { Message } from "../ContentMessage/styles";
 
 export default function TextMessage({index, messageObj}) {
   const array = messageObj.message.replace(/\*/g, '').split('\n');

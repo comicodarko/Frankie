@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FiSquare, FiDelete, FiCheckSquare } from "react-icons/fi";
-import { Message, MessageButton, MessageButtonsArea, MessageRow, MessageTitle } from "../../styles";
+import { Message, MessageButton, MessageButtonsArea, MessageRow, MessageTitle } from "./styles";
 
 export default function ContentMessage({index, messageObj, handleSendMessage}) {
   const [content, setContent] = useState(messageObj.content);

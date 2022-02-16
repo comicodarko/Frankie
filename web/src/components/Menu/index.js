@@ -1,7 +1,7 @@
 import React from "react";
 
 import { MenuContainer } from './styles';
-import MenuButton from './components/MenuButton';
+import MenuButton from './MenuButton';
 
 export default function Menu({ handleSendMessage }) {
   return (
@@ -9,6 +9,7 @@ export default function Menu({ handleSendMessage }) {
       <MenuButton type="todo" handleSendMessage={handleSendMessage} />
       <MenuButton type="movies" handleSendMessage={handleSendMessage} />
       <MenuButton type="links" handleSendMessage={handleSendMessage} />
+      <MenuButton type="games" handleSendMessage={handleSendMessage} />
     </MenuContainer>
   )
 }

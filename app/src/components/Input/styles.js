@@ -6,10 +6,10 @@ export const InputWrapper = styled.View`
     margin-left: auto;
     margin-right: auto;
     width: 80%;
+    margin: 20px auto;
 `
 
 export const InputComponent = styled.TextInput`
-    margin-bottom: 30px;
     border-width: 3px;
     border-color: ${colors.pink};
     background: ${colors.white};

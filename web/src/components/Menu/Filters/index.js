@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { FcAlphabeticalSortingAz } from "react-icons/fc";
 import { FiltersWrapper } from "./styles";
 
-import { GlobalContext } from '../../../../../../contexts/global';
+import { GlobalContext } from '../../../contexts/global';
 
 export default function Filters({ filterType, handleActionFilter, setShowFilters }) {
   const { movieGenres, linkTypes, todoTypes } = useContext(GlobalContext);
